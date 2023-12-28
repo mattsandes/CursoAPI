@@ -4,6 +4,7 @@ import br.com.sandes.model.Person;
 import br.com.sandes.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,13 +14,16 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
 
-    //Maniera nao tao eficiente de se fazer;
-
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.GET,
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Person> findingAll (){
+
+        return personService.findAll();
+    }
+
+    @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Person findById (
             @PathVariable(value = "id") Long id) throws Exception {
@@ -27,16 +31,7 @@ public class PersonController {
         return personService.findById(id);
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findingAll (){
-
-        return personService.findAll();
-    }
-
-    @RequestMapping(
-            method = RequestMethod.POST,
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE, //Produz um json como resposta;
             consumes = MediaType.APPLICATION_JSON_VALUE) //define que a requisicao sera feita via json;
     public void createPerson (
@@ -45,8 +40,7 @@ public class PersonController {
         personService.create(person);
     }
 
-    @RequestMapping(
-            method = RequestMethod.PUT,
+    @PutMapping(
             produces = MediaType.APPLICATION_JSON_VALUE, //Produz um json como resposta;
             consumes = MediaType.APPLICATION_JSON_VALUE) //define que a requisicao sera feita via json;
     public Person update (
@@ -55,11 +49,12 @@ public class PersonController {
         return personService.update(person);
     }
 
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.DELETE)
-    public void delete (
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete (
             @PathVariable(value = "id") Long id){
 
         personService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
