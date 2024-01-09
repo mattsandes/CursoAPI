@@ -1,5 +1,6 @@
 package br.com.sandes;
 
+import br.com.sandes.exceptions.UnsuportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -16,7 +17,7 @@ public class MathController {
             @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
 
             if(!isNumeric(numberOne) || !isNumeric(numberTwo)){
-                throw new Exception();
+                throw new UnsuportedMathOperationException("Please, set a numeric value");
             }
 
             return convertToDouble(numberOne) + convertToDouble(numberTwo);
