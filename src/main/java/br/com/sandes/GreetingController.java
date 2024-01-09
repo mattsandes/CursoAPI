@@ -17,6 +17,9 @@ public class GreetingController {
             value = "name",
             defaultValue = "World") String name){
 
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
+        return new Greeting(
+                counter.incrementAndGet(),
+                String.format(template, name)
+        );
     }
 }
