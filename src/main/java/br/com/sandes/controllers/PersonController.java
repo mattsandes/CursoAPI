@@ -1,25 +1,39 @@
-package br.com.sandes;
+package br.com.sandes.controllers;
 
-import br.com.sandes.exceptions.UnsuportedMathOperationException;
-import org.springframework.web.bind.annotation.*;
-import java.util.concurrent.atomic.AtomicLong;
+import br.com.sandes.model.Person;
+import br.com.sandes.services.PersonServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/person")
 public class PersonController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    //ASsim, o spring fica responsavel pela instancia;
+    @Autowired
+    PersonServices personServices;
 
-    @RequestMapping(value = "/sum/{numberOne}/{numberTwo}",
-                    method = RequestMethod.GET)
-    public Double sum(
-            @PathVariable(value = "numberOne") String numberOne,
-            @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+    //solução nao eficaz
+    // PersonServices personServices = new PersonServices();
 
-            if(!isNumeric(numberOne) || !isNumeric(numberTwo)){
-                throw new UnsuportedMathOperationException("Please, set a numeric value");
-            }
+    @RequestMapping(value = "/{id}",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public Person findById(@PathVariable(value = "id") String id) {
 
-            return convertToDouble(numberOne) + convertToDouble(numberTwo);
+        return personServices.findById(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Person> findAll(){
+
+        return personServices.findAll();
     }
 }
