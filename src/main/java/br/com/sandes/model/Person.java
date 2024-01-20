@@ -2,17 +2,46 @@ package br.com.sandes.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1l;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(
+    		name = "first_name",
+    		nullable = false,
+    		length = 80)
     private String first_name;
 
+    @Column(
+    		name = "last_name",
+    		nullable = false,
+    		length = 80)
     private String last_name;
+    
+    @Column(
+    		nullable = false,
+    		length = 80)
     private String address;
+    
+    @Column(
+    		nullable = false,
+    		length = 6)
     private String gender;
+    
+    
     public Person() {
     }
 
