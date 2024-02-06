@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class PersonServices {
 
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
-    
+
     @Autowired
     PersonRepository personRepository;
 
@@ -36,14 +36,14 @@ public class PersonServices {
     }
     
     public PersonVO create(PersonVO person) {
-    	logger.info("Person created!");
-    	
-    	var entity = DozerMapper.parseObject(person, Person.class);
-    	
-    	var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
-    	
-    	return vo;
-    }
+		logger.info("Person created!");
+
+		var entity = DozerMapper.parseObject(person, Person.class);
+
+		var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+
+		return vo;
+	}
     
     public PersonVO update(PersonVO person) {
     	logger.info("Person updated!");
