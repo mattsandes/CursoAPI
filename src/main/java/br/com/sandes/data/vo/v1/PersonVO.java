@@ -21,10 +21,9 @@ public class PersonVO implements Serializable {
     
     private String address;
 
-    @JsonIgnore //nao exibe o atributo anotado
+    //@JsonIgnore //nao exibe o atributo anotado
     private String gender;
-    
-    
+
     public PersonVO() {
     }
 
