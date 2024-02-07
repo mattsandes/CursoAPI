@@ -1,29 +1,30 @@
 package br.com.sandes.data.vo.v1;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
-public class PersonVO implements Serializable {
+@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"}) //muda a ordem de como os atributos sao exibidos no postman;
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = 1l;
 
-    private Long id;
+    @Mapping("id")
+    private Long key;
 
     @JsonProperty("first-name") //essa notatioo vai mudar como o atributo sera exibido
     private String first_name;
 
     @JsonProperty("last-name")
     private String last_name;
-    
+
     private String address;
 
-    //@JsonIgnore //nao exibe o atributo anotado
     private String gender;
-
     public PersonVO() {
     }
 
@@ -31,32 +32,34 @@ public class PersonVO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
-        PersonVO person = (PersonVO) o;
+        PersonVO personVO = (PersonVO) o;
 
-        if (!id.equals(person.id)) return false;
-        if (!first_name.equals(person.first_name)) return false;
-        if (!last_name.equals(person.last_name)) return false;
-        if (!address.equals(person.address)) return false;
-        return gender.equals(person.gender);
+        if (!Objects.equals(key, personVO.key)) return false;
+        if (!Objects.equals(first_name, personVO.first_name)) return false;
+        if (!Objects.equals(last_name, personVO.last_name)) return false;
+        if (!Objects.equals(address, personVO.address)) return false;
+        return Objects.equals(gender, personVO.gender);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + first_name.hashCode();
-        result = 31 * result + last_name.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + gender.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (key != null ? key.hashCode() : 0);
+        result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
+        result = 31 * result + (last_name != null ? last_name.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
         return result;
     }
 
-    public Long getId() {
-        return id;
+    public Long getKey() {
+        return key;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
     public String getFirst_name() {
