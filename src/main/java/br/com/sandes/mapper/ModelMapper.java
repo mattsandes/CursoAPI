@@ -1,14 +1,24 @@
 package br.com.sandes.mapper;
 
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
-import com.github.dozermapper.core.Mapper;
+import br.com.sandes.data.vo.v1.PersonVO;
+import br.com.sandes.model.Person;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DozerMapper {
 
-    private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+    private static final ModelMapper mapper = new ModelMapper();
+
+    static {
+        mapper.createTypeMap(
+                Person.class, PersonVO.class).addMapping(Person::getId, PersonVO::setKey);
+
+        mapper.createTypeMap(
+                PersonVO.class, Person.class)
+                .addMapping(PersonVO::getKey, Person::setId);
+    }
 
     public static <O, D> D parseObject(O origin, Class<D> destination){
         return mapper.map(origin, destination);
