@@ -13,11 +13,13 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI(){
         return new OpenAPI()
                 .info(new Info()
-                        .title("Person API")
+                        .title("RESTful API with Java 21 and Spring Bott 3")
                         .version("v1")
-                        .description("API to make crud using people")
+                        .description("A API do manage people")
                         .termsOfService("https://pub.sandes.com.br/minha-api")
-                        .license(new License().name("Apache 2.0")
-                                .url("https://pub.sandes.com.br/minha-api")));
+                        .license(
+                                new License()
+                                        .name("Apache 2.0")
+                                        .url("https://pub.sandes.com.br/minha-api")));
     }
 }
