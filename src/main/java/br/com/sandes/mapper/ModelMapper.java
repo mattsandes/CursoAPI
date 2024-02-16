@@ -2,14 +2,13 @@ package br.com.sandes.mapper;
 
 import br.com.sandes.data.vo.v1.PersonVO;
 import br.com.sandes.model.Person;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DozerMapper {
+public class ModelMapper {
 
-    private static final ModelMapper mapper = new ModelMapper();
+    private static final org.modelmapper.ModelMapper mapper = new org.modelmapper.ModelMapper();
 
     static {
         mapper.createTypeMap(
