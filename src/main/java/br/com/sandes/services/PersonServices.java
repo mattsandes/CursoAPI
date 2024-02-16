@@ -3,7 +3,7 @@ package br.com.sandes.services;
 import br.com.sandes.controllers.PersonController;
 import br.com.sandes.data.vo.v1.PersonVO;
 import br.com.sandes.exceptions.ResourceNotFoundException;
-import br.com.sandes.mapper.DozerMapper;
+import br.com.sandes.mapper.ModelMapper;
 import br.com.sandes.model.Person;
 import br.com.sandes.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PersonServices {
 
         logger.info("Finding all person!");
 
-        var persons = DozerMapper.parseListObjects(personRepository.findAll(), PersonVO.class);
+        var persons = ModelMapper.parseListObjects(personRepository.findAll(), PersonVO.class);
 
 		persons.stream()
 				.forEach(p -> p.add(linkTo(methodOn(PersonController.class)
@@ -41,7 +41,7 @@ public class PersonServices {
         var entity = personRepository.findById(id)
         		.orElseThrow(() -> new ResourceNotFoundException("No records found for this id!"));
         
-        var vo = DozerMapper.parseObject(entity, PersonVO.class);
+        var vo = ModelMapper.parseObject(entity, PersonVO.class);
 
 		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
 
@@ -51,9 +51,9 @@ public class PersonServices {
     public PersonVO create(PersonVO person) {
 		logger.info("Person created!");
 
-		var entity = DozerMapper.parseObject(person, Person.class);
+		var entity = ModelMapper.parseObject(person, Person.class);
 
-		var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+		var vo = ModelMapper.parseObject(personRepository.save(entity), PersonVO.class);
 
 		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
 
@@ -71,7 +71,7 @@ public class PersonServices {
     	entity.setAddress(person.getAddress());
     	entity.setGender(person.getGender());
 
-    	var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+    	var vo = ModelMapper.parseObject(personRepository.save(entity), PersonVO.class);
 
 		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
 
