@@ -34,6 +34,13 @@ Esse projeto ainda esta em desenvolvimento.
 
 ## Updates
 
+### Mudança do DozerMapper para o ModelMapper:
 Essa Api usa o padrão de projetos **VO** na sua arquitetura. No inicio, estava usando o **Dozzer** para fazer o mapeamen
 to entidades para VO, porem, mediante aglguns erros que viamos enfrentando ao longo da implementação, decidimos usar o
 **Model Mapper** para fazer essa conversão.
+
+### Adicionado a dependencia do Swagger
+
+A Nesse estagio de desenvolvimento da Api, ela agora possui a integração com a ferramenta de documentação **Swagger**.
+ Para acessar a api integrada com o Swagger, basta acessar a url: ```https://localhost:8080/swagger-ui/index.html```
+equanto a aplicação estiver subindo.
