@@ -1,6 +1,8 @@
 package br.com.sandes.mapper;
 
+import br.com.sandes.data.vo.v1.BooksVO;
 import br.com.sandes.data.vo.v1.PersonVO;
+import br.com.sandes.model.Books;
 import br.com.sandes.model.Person;
 
 import java.util.ArrayList;
@@ -17,6 +19,15 @@ public class ModelMapper {
         mapper.createTypeMap(
                 PersonVO.class, Person.class)
                 .addMapping(PersonVO::getKey, Person::setId);
+
+        //criando mapping para o key e id de books;
+
+        mapper.createTypeMap(
+                Books.class, BooksVO.class).addMapping(Books::getId, BooksVO::setKey);
+
+        mapper.createTypeMap(
+                BooksVO.class, Books.class)
+                .addMapping(BooksVO::getKey, Books::setId);
     }
 
     public static <O, D> D parseObject(O origin, Class<D> destination){
