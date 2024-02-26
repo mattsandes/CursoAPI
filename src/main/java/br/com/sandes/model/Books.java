@@ -31,8 +31,8 @@ public class Books implements Serializable {
 
     @Column(
             name = "launch_date",
-            nullable = false
-    )
+            nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date launchDate;
 
     @Column(name = "title",
