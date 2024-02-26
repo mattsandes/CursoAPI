@@ -14,7 +14,8 @@ public class ModelMapper {
 
     static {
         mapper.createTypeMap(
-                Person.class, PersonVO.class).addMapping(Person::getId, PersonVO::setKey);
+                Person.class, PersonVO.class)
+                .addMapping(Person::getId, PersonVO::setKey);
 
         mapper.createTypeMap(
                 PersonVO.class, Person.class)
