@@ -13,7 +13,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI(){
         return new OpenAPI()
                 .info(new Info()
-                        .title("RESTful API with Java 21 and Spring Bott 3")
+                        .title("RESTful API with Java 21 and Spring Boot 3")
                         .version("v1")
                         .description("A API do manage people")
                         .termsOfService("https://pub.sandes.com.br/minha-api")
