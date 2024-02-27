@@ -1,0 +1,20 @@
+server:
+  port: 8888
+spring:
+  datasource:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5432/person_db?useTimezone=true&serverTimezone=UTC
+      username: postgres
+      password: postgres
+  jpa:
+    hibernate: 
+      ddl-auto: none
+    properties:
+      hibernate:
+        show-sql: true
+  flyway:
+    baselineOnMigrate: true
+spring-doc:
+  pathsToMatch: /api/**/v1/**
+  swagger-ui:
+    use-root-path: true
