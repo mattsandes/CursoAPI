@@ -47,6 +47,7 @@ public class PersonController {
     	return personServices.findAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:8080") //como isso, apenas os acessos desse endereço poderao acessar esse endoint;
     @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON,
                     MediaType.APPLICATION_XML,
@@ -69,7 +70,8 @@ public class PersonController {
 
         return personServices.findById(id);
     }
-    
+
+    @CrossOrigin(origins = {"http://localhost:8080", "https://erudio.com.br"}) //como isso, apenas os acessos desse endereço poderao acessar esse endoint;
     @PostMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
                  consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Adds a new person", description = "Adds a new person by passingn in a JSON, XML or YML representation of the person.",
