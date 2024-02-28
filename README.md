@@ -45,3 +45,7 @@ to entidades para VO, porem, mediante aglguns erros que viamos enfrentando ao lo
 A Nesse estagio de desenvolvimento da Api, ela agora possui a integração com a ferramenta de documentação **Swagger**.
  Para acessar a api integrada com o Swagger, basta acessar a url: ```http://localhost:8080/swagger-ui/index.html```
 equanto a aplicação estiver subindo.
+
+### Em breve
+
+Em breve a API vai suportar validação de contas com JWT e Spring Security
