@@ -41,6 +41,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 
+	//tratando quando o jwt for invalido retornando o status code forbiden;
 	@ExceptionHandler(InvalidJWTAuthenticationException.class)
 	private final ResponseEntity<ExceptionResponse> handleInvalidJWTAuthenticationExceptionException(
 			Exception ex, WebRequest request){
