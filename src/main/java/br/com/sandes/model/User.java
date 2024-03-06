@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails,Serializable {
+public class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,18 +54,20 @@ public class User implements UserDetails,Serializable {
             name = "enabled",
             unique = true)
     private Boolean enabled;
+    
+    //mapeando a tabela user_permission
 
+    @ManyToMany(fetch = FetchType.EAGER) //assim que a lista de usuarios for recarregada, as permissoes também serão carregadas;
+    @JoinTable(name = "user_permission", //tabela que sera criada com os usuarios e as permissoes;
+    		   joinColumns = {@JoinColumn (name = "id_user")},
+               inverseJoinColumns = {@JoinColumn (name = "id_permission")}) //quando carregada as permissões, sera carregada os usuarios;
+    private List<Permission> permissions; //para a coluna "user permissions", ele tera uma lista de permissões;
 
-
-    @ManyToMany(fetch = FetchType.EAGER) //sera recuperado assim que os usuarios forem carregados;
-    @JoinTable(name = "user_permission", joinColumns = {@JoinColumn (name = "id_user")},
-        inverseJoinColumns = {@JoinColumn (name = "id_permission")})
-    private List<Permission> permissions;
-
+    //recuperando as roles do usuarios;
     public List<String> getRoles(){
         List<String> roles = new ArrayList<>();
 
-        for (Permission permission: permissions){
+        for (Permission permission: permissions){ //adicionando as permissoes para cada roles que forem passadas;
             roles.add(permission.getDescription());
         }
 
