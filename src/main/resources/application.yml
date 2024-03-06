@@ -3,7 +3,7 @@ cors:
 security:
   jwt:
     token:
-      secret-key: 53ccr37
+      secret-key: 53cr37
       expire-lenght: 3600000
 spring:
   datasource:
@@ -19,7 +19,9 @@ spring:
         show-sql: true
   flyway:
     baselineOnMigrate: true
-spring-doc:
-  pathsToMatch: /api/**/v1/**
+springdoc:
+  pathsToMatch:
+    - /auth/**
+    - /api/**/v1/**
   swagger-ui:
     use-root-path: true
