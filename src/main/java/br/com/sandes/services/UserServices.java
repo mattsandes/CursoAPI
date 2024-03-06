@@ -1,38 +1,41 @@
 package br.com.sandes.services;
 
-import br.com.sandes.repositories.UserRepository;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.logging.Logger;
+import br.com.sandes.repositories.UserRepository;
 
 @Service
-public class UserServices implements UserDetailsService {
+public class UserServices implements UserDetailsService{
 
-    private Logger logger = Logger.getLogger(UserServices.class.getName());
+	private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
+	//injeção de dependencia por field
     @Autowired
-	UserRepository userRepository; //injecao de dependencia via propriedade;
+    UserRepository userRepository;
 
-	public UserServices(UserRepository userRepository) { //injeçao de dependencia via contrutor; Ler sobre depois;
+    //injeção de dependencia por construtor;
+    public UserServices(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("Finding one user by name " + username + "!");
-
-		var user = userRepository.findByUserName(username);
-
-		if(user != null){
+		
+		var user = userRepository.findByUsername(username);
+		
+		if (user != null) {
 			return user;
-		}
-		else {
+			
+		} else {
 			throw new UsernameNotFoundException("" + username + " not found!");
-
+			
 		}
 	}
 }
