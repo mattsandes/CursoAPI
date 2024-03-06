@@ -1,5 +1,14 @@
 package br.com.sandes.services;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.sandes.controllers.BookController;
 import br.com.sandes.controllers.PersonController;
 import br.com.sandes.data.vo.v1.BooksVO;
@@ -7,15 +16,6 @@ import br.com.sandes.exceptions.ResourceNotFoundException;
 import br.com.sandes.mapper.ModelMapper;
 import br.com.sandes.model.Books;
 import br.com.sandes.repositories.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-import java.util.List;
-import java.util.logging.Logger;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class BookService {
