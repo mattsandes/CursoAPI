@@ -1,6 +1,7 @@
 package br.com.sandes.config;
 
-import br.com.sandes.serializationconverter.YmlJackson2HttpConverter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -9,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
+import br.com.sandes.serializationconverter.YmlJackson2HttpConverter;
 
 @Configuration //serve para que quando o spring carregar, o spring leia esse arquivo pos contem informações de configuração da aplicação
 public class WebConfig implements WebMvcConfigurer {
