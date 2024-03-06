@@ -15,7 +15,8 @@ public class TokenVO implements Serializable {
     private String accessToken;
     private String refreshToken;
 
-    public TokenVO(String username,
+    public TokenVO(
+    			   String username,
                    Boolean authenticated,
                    Date created,
                    Date expiration,
@@ -33,7 +34,7 @@ public class TokenVO implements Serializable {
     public TokenVO() {
     }
 
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
