@@ -4,15 +4,30 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"username", "authenticated", "created", "expiration", "accessToken", "refreshToken"}) //muda a ordem de como os atributos sao exibidos no postman;
 public class TokenVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonProperty("username")
     private String username;
+    
+    @JsonProperty("authenticated")
     private Boolean authenticated;
+
+    @JsonProperty("created")
     private Date created;
+    
+    @JsonProperty("expiration")
     private Date expiration;
+    
+    @JsonProperty("accessToken")
     private String accessToken;
+    
+    @JsonProperty("refreshToken")
     private String refreshToken;
 
     public TokenVO(
