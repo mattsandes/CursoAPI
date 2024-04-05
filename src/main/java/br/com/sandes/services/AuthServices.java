@@ -28,8 +28,10 @@ public class AuthServices {
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity signin(AccountCredentialsVO data) {
 		try {
-			var username = data.getUserName();
+			var username = data.getUsername();
 			var password = data.getPassword();
+			
+			//var encodedPassword = passwordEncoder.encode(password);
 			
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(username, password));
@@ -47,7 +49,7 @@ public class AuthServices {
 			
 			return ResponseEntity.ok(tokenResponse);
 		} catch (Exception e) {
-			throw new BadCredentialsException("Invalid usernanem/password supplied!");
+			throw new BadCredentialsException("Invalid username/password supplied!");
 		}
 	}
 
