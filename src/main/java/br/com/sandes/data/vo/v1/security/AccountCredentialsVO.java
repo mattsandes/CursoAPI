@@ -1,44 +1,56 @@
 package br.com.sandes.data.vo.v1.security;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class AccountCredentialsVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String userName;
+    private String username;
     private String password;
 
-    public AccountCredentialsVO(String userName, String password) {
-        this.userName = userName;
+    public AccountCredentialsVO(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
 
-        AccountCredentialsVO that = (AccountCredentialsVO) o;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AccountCredentialsVO other = (AccountCredentialsVO) obj;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
 
-        if (!Objects.equals(userName, that.userName)) return false;
-        return Objects.equals(password, that.password);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userName != null ? userName.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
-    }
-
-    public String getUserName() {
-        return userName;
+	public String getUsername() {
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPassword() {
