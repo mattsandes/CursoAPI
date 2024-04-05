@@ -4,18 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sandes.data.vo.v1.security.AccountCredentialsVO;
 import br.com.sandes.services.AuthServices;
+import br.com.sandes.util.MediaType;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Authentication Endpoint")
 @RestController
-@RequestMapping("/signin")
+@RequestMapping("/auth")
 public class AuthController {
 
 	@Autowired
@@ -23,7 +24,9 @@ public class AuthController {
 	
 	@SuppressWarnings("rawtypes")
 	@Operation(summary = "Authenticates a user and returns a token")
-	@PostMapping
+	@PostMapping(value = "/signin",
+				 produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
+                 consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
 		if(checkIfParamsIsNotNull(data)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -37,13 +40,13 @@ public class AuthController {
 					.body("Invalid client request");
 		}
 		
-		return token;
+		return ResponseEntity.ok(token);
 	}
 
 	private boolean checkIfParamsIsNotNull(AccountCredentialsVO data) {
 		return data == null ||
-				data.getUserName() == null ||
-				data.getUserName().isBlank() ||
+				data.getUsername() == null ||
+				data.getUsername().isBlank() ||
 				data.getPassword() == null ||
 				data.getPassword().isBlank();
 	}
