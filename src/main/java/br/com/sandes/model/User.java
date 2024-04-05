@@ -57,10 +57,10 @@ public class User implements UserDetails, Serializable {
     
     //mapeando a tabela user_permission
 
-    @ManyToMany(fetch = FetchType.EAGER) //assim que a lista de usuarios for recarregada, as permissoes também serão carregadas;
     @JoinTable(name = "user_permission", //tabela que sera criada com os usuarios e as permissoes;
     		   joinColumns = {@JoinColumn (name = "id_user")},
                inverseJoinColumns = {@JoinColumn (name = "id_permission")}) //quando carregada as permissões, sera carregada os usuarios;
+    @ManyToMany(fetch = FetchType.EAGER) //assim que a lista de usuarios for recarregada, as permissoes também serão carregadas;
     private List<Permission> permissions; //para a coluna "user permissions", ele tera uma lista de permissões;
 
     //recuperando as roles do usuarios;
