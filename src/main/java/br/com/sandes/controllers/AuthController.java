@@ -3,8 +3,11 @@ package br.com.sandes.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +44,33 @@ public class AuthController {
 		}
 		
 		return ResponseEntity.ok(token);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Operation(summary = "Refresh token for authenticated user and returns a token")
+	@PutMapping(value = "/refresh/{username}",
+	produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
+	consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+	public ResponseEntity refreshToken(@PathVariable ("username")String username,
+			@RequestHeader("Authorization") String refreshToken) {
+		if(checkParamsIsNotNull(username, refreshToken)) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN)
+					.body("Invalid client request");
+		}
+		
+		var token = authServices.refreshToken(username, refreshToken);
+		
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN)
+					.body("Invalid client request");
+		}
+		
+		return ResponseEntity.ok(token);
+	}
+
+	private boolean checkParamsIsNotNull(String username, String refreshToken) {
+		return refreshToken == null || refreshToken.isBlank() ||
+				username == null || refreshToken.isBlank();
 	}
 
 	private boolean checkIfParamsIsNotNull(AccountCredentialsVO data) {
