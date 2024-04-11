@@ -38,14 +38,14 @@ public class BookService {
     }
 
     public BooksVO findById(Long id){
-        logger.info("Finding one person");
+        logger.info("Finding a book");
 
         var entity = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No resource found for this id"));
 
         var vo = ModelMapper.parseObject(entity, BooksVO.class);
 
-        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        vo.add(linkTo(methodOn(BookController.class).findById(id)).withSelfRel());
 
         return vo;
     }
