@@ -1,11 +1,12 @@
 package br.com.sandes.data.vo.v1;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.springframework.hateoas.RepresentationModel;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"}) //muda a ordem de como os atributos sao exibidos no postman;
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
@@ -24,36 +25,35 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     private String address;
 
     private String gender;
-    public PersonVO() {
+    
+    private Boolean enabled;
+
+	public PersonVO() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(address, enabled, first_name, gender, key, last_name);
+		return result;
+	}
 
-        PersonVO personVO = (PersonVO) o;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonVO other = (PersonVO) obj;
+		return Objects.equals(address, other.address) && Objects.equals(enabled, other.enabled)
+				&& Objects.equals(first_name, other.first_name) && Objects.equals(gender, other.gender)
+				&& Objects.equals(key, other.key) && Objects.equals(last_name, other.last_name);
+	}
 
-        if (!Objects.equals(key, personVO.key)) return false;
-        if (!Objects.equals(first_name, personVO.first_name)) return false;
-        if (!Objects.equals(last_name, personVO.last_name)) return false;
-        if (!Objects.equals(address, personVO.address)) return false;
-        return Objects.equals(gender, personVO.gender);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (key != null ? key.hashCode() : 0);
-        result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
-        result = 31 * result + (last_name != null ? last_name.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
-        return result;
-    }
-
-    public Long getKey() {
+	public Long getKey() {
         return key;
     }
 
@@ -92,4 +92,12 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     public void setGender(String gender) {
         this.gender = gender;
     }
+    
+    public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 }
