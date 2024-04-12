@@ -1,6 +1,7 @@
 package br.com.sandes.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 
@@ -43,35 +44,35 @@ public class Person implements Serializable {
     		length = 6)
     private String gender;
     
+    @Column(
+    		nullable = false)
+    private Boolean enabled;
     
     public Person() {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public int hashCode() {
+		return Objects.hash(address, first_name, gender, id, last_name);
+	}
 
-        Person person = (Person) o;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(address, other.address) && Objects.equals(first_name, other.first_name)
+				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
+				&& Objects.equals(last_name, other.last_name);
+	}
 
-        if (!id.equals(person.id)) return false;
-        if (!first_name.equals(person.first_name)) return false;
-        if (!last_name.equals(person.last_name)) return false;
-        if (!address.equals(person.address)) return false;
-        return gender.equals(person.gender);
-    }
 
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + first_name.hashCode();
-        result = 31 * result + last_name.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + gender.hashCode();
-        return result;
-    }
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -107,7 +108,15 @@ public class Person implements Serializable {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setGender(String gender) {
         this.gender = gender;
     }
 }
