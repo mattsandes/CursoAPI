@@ -1,18 +1,22 @@
 package br.com.sandes.services;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.sandes.controllers.PersonController;
 import br.com.sandes.data.vo.v1.PersonVO;
+import br.com.sandes.exceptions.RequiredObjectNullExceptions;
 import br.com.sandes.exceptions.ResourceNotFoundException;
 import br.com.sandes.mapper.ModelMapper;
 import br.com.sandes.model.Person;
 import br.com.sandes.repositories.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.logging.Logger;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PersonServices {
@@ -49,6 +53,10 @@ public class PersonServices {
     }
     
     public PersonVO create(PersonVO person) {
+    	if(person == null) {
+    		throw new RequiredObjectNullExceptions();
+    	}
+    	
 		logger.info("Person created!");
 
 		var entity = ModelMapper.parseObject(person, Person.class);
@@ -61,6 +69,10 @@ public class PersonServices {
 	}
     
     public PersonVO update(PersonVO person) {
+    	if(person == null) {
+    		throw new RequiredObjectNullExceptions();
+    	}
+    	
     	logger.info("Person updated!");
     	
     	var entity = personRepository
@@ -77,6 +89,23 @@ public class PersonServices {
 
 		return vo;
     }
+    
+    @Transactional
+    public PersonVO disablePerson(Long id){
+    	logger.info("Disabling one person!");
+    	
+    	personRepository.disablePerson(id);
+    	
+    	var entity = personRepository.findById(id)
+    			.orElseThrow(() -> new ResourceNotFoundException("No records found for this id!"));
+    	
+    	var vo = ModelMapper.parseObject(entity, PersonVO.class);
+    	
+    	vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+    	
+    	return vo;
+    }
+
     
     public void delete(Long id) {
     	logger.info("Person deleted!");
