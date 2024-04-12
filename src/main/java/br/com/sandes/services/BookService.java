@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.sandes.controllers.BookController;
-import br.com.sandes.controllers.PersonController;
 import br.com.sandes.data.vo.v1.BooksVO;
 import br.com.sandes.exceptions.ResourceNotFoundException;
 import br.com.sandes.mapper.ModelMapper;
