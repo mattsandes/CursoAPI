@@ -23,16 +23,16 @@ public class Person implements Serializable {
     private Long id;
 
     @Column(
-    		name = "first_name",
+    		name = "firstName",
     		nullable = false,
     		length = 80)
-    private String first_name;
+    private String firstName;
 
     @Column(
-    		name = "last_name",
+    		name = "lastName",
     		nullable = false,
     		length = 80)
-    private String last_name;
+    private String lastName;
     
     @Column(
     		nullable = false,
@@ -53,7 +53,7 @@ public class Person implements Serializable {
 
     @Override
 	public int hashCode() {
-		return Objects.hash(address, first_name, gender, id, last_name);
+		return Objects.hash(address, firstName, gender, id, lastName);
 	}
 
 	@Override
@@ -65,9 +65,9 @@ public class Person implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		return Objects.equals(address, other.address) && Objects.equals(first_name, other.first_name)
+		return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
-				&& Objects.equals(last_name, other.last_name);
+				&& Objects.equals(lastName, other.lastName);
 	}
 
 
@@ -80,20 +80,20 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
