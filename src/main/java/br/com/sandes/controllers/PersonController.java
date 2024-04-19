@@ -1,8 +1,12 @@
 package br.com.sandes.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sandes.data.vo.v1.PersonVO;
@@ -51,9 +56,24 @@ public class PersonController {
                 @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content),
             }
     )
-    public List<PersonVO> findAll(){
+    public ResponseEntity<PagedModel<EntityModel<PersonVO>>> findAll(
+        @RequestParam(value = "page", defaultValue = "0") Integer page,
+        @RequestParam(value = "limit", defaultValue = "12") Integer limit,
+        @RequestParam(value = "direction", defaultValue = "asc") String direction){
+
+                //definindo o sortDirection
+                //isso servira para indicar como os resultados da pagina serão ordenados
+
+                //esse trecho valida se na requisição, o parametro sort direction é igual a 
+                //desc, se for 'desc' os resultados serão exibidos de maneira descnedente
+                //caso seja diferente disso, os valores serão exibidos de maneira ascendente;
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
     	
-    	return personServices.findAll();
+        //defiinindo a numero de paginas, a quantidade de itens na pagina e a ordenação
+        //se ascendente ou descendente;
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+
+    	return ResponseEntity.ok(personServices.findAll(pageable));
     }
 
     @CrossOrigin(origins = "http://localhost:8080") //como isso, apenas os acessos desse endereço poderao acessar esse endoint;
