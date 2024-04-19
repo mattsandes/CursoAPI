@@ -17,10 +17,10 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     private Long key;
 
     @JsonProperty("first-name") //essa notatioo vai mudar como o atributo sera exibido
-    private String first_name;
+    private String firstName;
 
     @JsonProperty("last-name")
-    private String last_name;
+    private String lastName;
 
     private String address;
 
@@ -35,7 +35,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(address, enabled, first_name, gender, key, last_name);
+		result = prime * result + Objects.hash(address, enabled, firstName, gender, key, lastName);
 		return result;
 	}
 
@@ -49,8 +49,8 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 			return false;
 		PersonVO other = (PersonVO) obj;
 		return Objects.equals(address, other.address) && Objects.equals(enabled, other.enabled)
-				&& Objects.equals(first_name, other.first_name) && Objects.equals(gender, other.gender)
-				&& Objects.equals(key, other.key) && Objects.equals(last_name, other.last_name);
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(gender, other.gender)
+				&& Objects.equals(key, other.key) && Objects.equals(lastName, other.lastName);
 	}
 
 	public Long getKey() {
@@ -61,20 +61,20 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
         this.key = key;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
