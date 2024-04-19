@@ -3,10 +3,14 @@ package br.com.sandes.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import br.com.sandes.controllers.PersonController;
@@ -26,17 +30,30 @@ public class PersonServices {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonVO> findAll(){
+	@Autowired
+	PagedResourcesAssembler<PersonVO> assembler;
+
+    public PagedModel<EntityModel<PersonVO>> findAll(Pageable pageable){
 
         logger.info("Finding all person!");
 
-        var persons = ModelMapper.parseListObjects(personRepository.findAll(), PersonVO.class);
+		var personPage = personRepository.findAll(pageable);
 
-		persons.stream()
-				.forEach(p -> p.add(linkTo(methodOn(PersonController.class)
-						.findById(p.getKey())).withSelfRel()));
+		var personVosPage = personPage.map(
+			p -> ModelMapper.parseObject(p, PersonVO.class));
 
-		return persons;
+		personVosPage.map(
+			p -> p.add(
+				linkTo(methodOn(PersonController.class)
+					.findById(p.getKey())).withSelfRel()));
+
+		//retornando o link hateoas para a pagina que os itens estão;
+		Link link = linkTo(methodOn(PersonController.class).findAll(
+			pageable.getPageNumber(),
+			pageable.getPageSize(),
+			"asc")).withSelfRel();
+
+		return assembler.toModel(personVosPage, link);
     }
 
     public PersonVO findById(Long id){
@@ -78,8 +95,8 @@ public class PersonServices {
     	var entity = personRepository
     			.findById(person.getKey()).orElseThrow(() -> new ResourceNotFoundException("No records found for this id!"));
     	
-    	entity.setFirst_name(person.getFirst_name());
-    	entity.setLast_name(person.getLast_name());
+    	entity.setFirstName(person.getFirstName());
+    	entity.setLastName(person.getLastName());
     	entity.setAddress(person.getAddress());
     	entity.setGender(person.getGender());
 
