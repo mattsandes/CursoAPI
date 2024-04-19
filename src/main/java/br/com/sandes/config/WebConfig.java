@@ -40,15 +40,16 @@ public class WebConfig implements WebMvcConfigurer {
 
         converters.add(new YmlJackson2HttpConverter());
     }
-
-    @Override
+    
+    //defindo quais requisições podem acessar os recursos;
     public void addCorsMappings(CorsRegistry registry) {
         var allowedOrigins = corsOriginPatterns.split(",");
 
-        registry.addMapping("/**")
+        registry.addMapping("/**")//mapeada todas as rotas da api;
+        		//esse metod pode ser usado para configurar cors para alguns endpoints (nao sera usado aqui);
                 //.allowedMethods("GET", "POST", "DELETE", "PUT") servem apenas como referencia;
                 .allowedOrigins(allowedOrigins)
-                .allowedMethods("*")
-                .allowCredentials(true);
+                .allowedMethods("*")//permitindo que todos os metodo sejam acessados;
+                .allowCredentials(true); //possibilitando autenticação para quem esta acessando a api;
     }
 }
