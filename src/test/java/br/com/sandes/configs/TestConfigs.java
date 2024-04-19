@@ -2,7 +2,7 @@ package br.com.sandes.configs;
 
 public class TestConfigs {
 
-	//definindo a porta que o restAssured usara quando os testes de integração for iniciado;
+	//definindo a contante para a porta que o restAssured usara quando os testes de integração for iniciado;
 	public static final int SERVER_PORT = 8888;
 	
 	//adicionando a constante de origem;
