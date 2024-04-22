@@ -42,6 +42,7 @@ public class PersonServices {
 		var personVosPage = personPage.map(
 			p -> ModelMapper.parseObject(p, PersonVO.class));
 
+		//retornando o link hateoas para cada item no banco de dados;
 		personVosPage.map(
 			p -> p.add(
 				linkTo(methodOn(PersonController.class)
