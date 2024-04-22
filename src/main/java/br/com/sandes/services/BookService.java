@@ -3,10 +3,16 @@ package br.com.sandes.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
 import java.util.logging.Logger;
 
+import br.com.sandes.controllers.PersonController;
+import br.com.sandes.data.vo.v1.PersonVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import br.com.sandes.controllers.BookController;
@@ -22,18 +28,31 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    PagedResourcesAssembler<BooksVO> assembler;
+
     private static final Logger logger = Logger.getLogger(BookService.class.getName());
 
-    public List<BooksVO> findAll(){
+    public PagedModel<EntityModel<BooksVO>> findAll(Pageable pageable){
+
         logger.info("Finding all books");
 
-        var books = ModelMapper.parseListObjects(bookRepository.findAll(), BooksVO.class);
+        var bookPage = bookRepository.findAll(pageable);
 
-        books.stream()
-                .forEach(p -> p.add(linkTo(methodOn(BookController.class)
+        var booksVosPage = bookPage.map(
+                p -> ModelMapper.parseObject(p, BooksVO.class));
+
+        booksVosPage.map(
+                p -> p.add(
+                    linkTo(methodOn(BookController.class)
                         .findById(p.getKey())).withSelfRel()));
 
-        return books;
+        Link link = linkTo(methodOn(PersonController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "asc")).withSelfRel();
+
+        return assembler.toModel(booksVosPage, link);
     }
 
     public BooksVO findById(Long id){
