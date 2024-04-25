@@ -1,10 +1,12 @@
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://erudio.com.br
+file:
+  upload-dir: /home/mateus/Downloads/UploadDir
 security:
   jwt:
     token:
       secret-key: 53cr37
-      expire-lenght: 3600000
+      expire-length: 3600000
 spring:
   datasource:
       driver-class-name: org.postgresql.Driver
@@ -17,6 +19,13 @@ spring:
     properties:
       hibernate:
         show-sql: true
+  # Configurando o multpart para receber arquivos
+  servlet:
+    multipart:
+      enabled: true #permitindo o multpart
+      file-size-threshold: 2KB #tamanho em kbtes que vamos armazenar em memoria e, se, passando disso, vamos armazenar em disco
+      max-file-size: 200MB #tamanho maximo de armazenamento
+      max-request-size: 215MB
   flyway:
     baselineOnMigrate: true
 springdoc:
