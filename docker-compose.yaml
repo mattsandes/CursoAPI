@@ -1,0 +1,40 @@
+#versao do script
+version: '3'
+
+# criando um serviço
+services:
+  # criando o primeiro serviço: banco de dados
+  db:
+    restart: always
+    image: postgres:16.2
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: person_db
+      TZ: America/Sao_Paulo
+    ports:
+      - "5433:5432"
+    networks:
+      - dev-network
+
+  #Criando o serviço da nossa aplicação
+  application-conttainer:
+      restart: always
+      build: ./home/mateus/Personal/CursoAPI
+      working_dir: /home/mateus/Personal/CursoAPI
+      environment:
+        TZ: America/Sao_Paulo
+        SPRING.DATASOURCE.URL: jdbc:postgresql://db:5432/person_db
+        SPRING.DATASOURCE.USERNAME: postgres
+        SPRING.DATASOURCE.PASSWORD: postgres
+        ports:
+          8888
+        command:
+          mvn spring-boot:run
+        depends_on:
+          db
+        networks:
+          dev-network
+networks:
+  dev-network:
+    driver: bridge
