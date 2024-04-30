@@ -35,10 +35,10 @@ public class MockPerson {
             Person person = new Person();
 
             person.setAddress("Addres Test" + number);
-            person.setFirst_name("First Name Test" + number);
+            person.setFirstName("First Name Test" + number);
             person.setGender(((number % 2)==0) ? "Male" : "Female");
             person.setId(number.longValue());
-            person.setLast_name("Last Name Test" + number);
+            person.setLastName("Last Name Test" + number);
 
             return person;
         }
@@ -47,10 +47,10 @@ public class MockPerson {
             PersonVO person = new PersonVO();
 
             person.setAddress("Addres Test" + number);
-            person.setFirst_name("First Name Test" + number);
+            person.setFirstName("First Name Test" + number);
             person.setGender(((number % 2)==0) ? "Male" : "Female");
             person.setKey(number.longValue());
-            person.setLast_name("Last Name Test" + number);
+            person.setLastName("Last Name Test" + number);
 
             return person;
         }

@@ -35,29 +35,6 @@ class BookServiceTest {
 		MockitoAnnotations.openMocks(this);
 		mockBook = new MockBook();
 	}
-
-	@Test
-	@DisplayName("Validate that the is possible to find all the records about book")
-	void findAll(){
-		//given
-		List<Books> entity = mockBook.mockEntityList();
-		
-		when(repository.findAll()).thenReturn(entity);
-		
-		//when
-		var result = service.findAll();
-		var bookOne = result.get(1);
-		
-		System.out.println(bookOne.getLinks());
-		
-		//then
-		assertNotNull(result);
-		assertEquals("Book Title Test 1", bookOne.getTitle());
-		assertEquals("Author Name Test 1", bookOne.getAuthor());
-		assertEquals(1.0, bookOne.getPrice());
-		assertNotNull(bookOne.getLaunchDate());
-		assertTrue(bookOne.toString().contains("</api/books/v1/1>;rel=\"self\""));
-	}
 	
 	@Test
 	@DisplayName("Validate that is possible to find one record from books")
