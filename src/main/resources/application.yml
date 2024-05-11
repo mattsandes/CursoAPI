@@ -1,7 +1,7 @@
 server:
   port: 8888
 cors:
-  originPatterns: http://localhost:8080,http://localhost:3000,https://erudio.com.br
+  originPatterns: http://localhost:8080,http://localhost:3000,https://erudio.com.br,http://localhost:8888
 file:
   upload-dir: /home/mateus/Downloads/UploadDir
 security:
