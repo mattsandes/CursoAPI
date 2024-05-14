@@ -35,11 +35,11 @@ jobs:
         cache: maven
         
     - name: Build Application Jar
-      working-directory: ./CursoApi
+      working-directory: /home/runner/work/CursoAPI/CursoAPI
       run: mvn clean package
 
     - name: Docker compose Build
-      working-directory: ./CursoApi
+      working-directory: /home/runner/work/CursoAPI/CursoAPI
       run: docker compose build
 
     - name: Push to Docker Hub Container Registry
