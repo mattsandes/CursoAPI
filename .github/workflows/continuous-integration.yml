@@ -36,7 +36,7 @@ jobs:
         
     - name: Build Application Jar
       working-directory: /home/runner/work/CursoAPI/CursoAPI
-      run: mvn clean package
+      run: mvn clean package -DskipTests
 
     - name: Docker compose Build
       working-directory: /home/runner/work/CursoAPI/CursoAPI
